@@ -1,0 +1,36 @@
+.createNewUserInputs {
+    border: 1px solid black;
+    display: table;
+    padding: 8px;
+    margin: auto;
+    border-radius: 20px;
+}
+
+.createNewUserInputs input[type=text],
+.createNewUserInputs input[type=password],
+.createNewUserInputs input[type=number] {
+    padding: 10px 20px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.createNewUserInputs button{
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.toggleInputsButton {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.8;
+}

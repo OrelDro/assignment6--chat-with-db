@@ -1,0 +1,17 @@
+{
+  "extends": ["tslint-react"],
+  "rules": {
+    "object-literal-sort-keys": false,
+    "no-string-literal": false,
+    "jsx-no-lambda": false,
+    "jsx-wrap-multiline": false,
+    "jsx-no-multiline-js":false,
+    "jsx-alignment":false
+  },
+  "linterOptions": {
+    "exclude": [
+      "config/**/*.js",
+      "node_modules/**/*.ts"
+    ]
+  }
+}

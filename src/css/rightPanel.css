@@ -1,0 +1,18 @@
+.rightPanel {
+    background-image: url('../images/msgPanelBackground.jpg');
+    display: flex;
+    flex-direction: column;
+    flex: 3;
+    border: 1px solid black;
+}
+
+.groupUserHeader {
+    text-align: center;
+    margin: auto;
+    margin-top: 1em;
+    display: inline-block;
+    background-color: cadetblue;
+    border: 2px solid black;
+    border-radius: 15px;
+    width: 30%;
+}

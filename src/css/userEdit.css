@@ -1,0 +1,35 @@
+.userEditMainDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.userEditInputs {
+    border: 1px solid black;
+    margin: 5px;
+    display: inline-block;
+}
+
+.userEditInputs  p{
+    margin: 5px;
+}
+
+.userEditInputs input[type=text], .userEditInputs input[type=number], .userEditInputs input[type=password] {
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.userEditInputs button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.8;
+}

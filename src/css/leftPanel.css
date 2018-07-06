@@ -1,0 +1,44 @@
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
+
+.leftPanel {
+    flex: 1;
+    border: 1px solid black;
+}
+
+.leftUl {
+    padding: 0.5em;
+    margin: 0;
+    list-style: none;
+    outline: none;
+}
+
+.leftPanel ul li {
+    display: block;
+    user-select: none;
+}
+
+.groupLi:before {
+    content: "\f0c0";
+    font-family: FontAwesome;
+    font-size: 30px;
+    padding-right: 8px;
+}
+
+.userLi:before {
+    content: "\f007";
+    font-family: FontAwesome;
+    font-size: 30px;
+    padding-right: 16px;
+}
+
+.activeClass {
+    background-color: cadetblue;
+}
+
+.removeBackground {
+    background-color: white;
+}
+
+.addBackspace {
+    text-indent: 15px;
+}

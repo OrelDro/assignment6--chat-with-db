@@ -1,0 +1,7 @@
+.msgPanel {
+    flex: 4;
+    margin: 1em;
+    overflow: auto;
+    padding: 0.5em;
+}
+
