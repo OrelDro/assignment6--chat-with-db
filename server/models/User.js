@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose = require("mongoose");
 const Db = require("../db");
 const userDb = new Db.Db();
 const userPathDb = '/users.json';
@@ -10,15 +11,6 @@ class User {
         this.UserName = username;
         this.Password = password;
         this.age = age;
-    }
-    getUsername() {
-        return this.UserName;
-    }
-    getPassword() {
-        return this.Password;
-    }
-    getAge() {
-        return this.age;
     }
     static getUsers() {
         return new Promise((resolve) => {
@@ -97,18 +89,12 @@ class User {
             }
         }
     }
-    setUsername(username) {
-        this.UserName = username;
-    }
-    ;
-    setPassword(password) {
-        this.Password = password;
-    }
-    ;
-    setAge(age) {
-        this.age = age;
-    }
-    ;
 }
-exports.default = User;
+const userSchema = mongoose.Schema({
+    username: String,
+    password: String,
+    age: Number
+});
+exports.default = mongoose.model('User', userSchema);
+//export default User;
 //# sourceMappingURL=User.js.map

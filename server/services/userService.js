@@ -9,64 +9,63 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const User_1 = require("../models/User");
-const uuid_1 = require("uuid");
 function getUsersList() {
     return new Promise((resolve, reject) => {
-        User_1.default.getUsers().then((usersList) => {
-            const usersArray = [];
-            for (const user in usersList["users"]) {
-                delete (usersList["users"][user].Password);
-                usersArray.push(Object.assign({ "id": user }, usersList["users"][user]));
-            }
-            resolve(usersArray);
+        User_1.default.find(null, { password: 0, __v: 0 }).then((usersList) => {
+            resolve(usersList);
+        }).catch((e) => {
+            reject(e);
         });
     });
 }
 exports.getUsersList = getUsersList;
-function Login(username, password) {
+function addUser(newUser) {
     return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-        User_1.default.Login(username, password).then((userLogin) => {
-            delete userLogin["Password"];
-            resolve(userLogin);
+        const user = new User_1.default(newUser);
+        user.save().then((userAdded) => {
+            const returnUser = {
+                _id: userAdded._id,
+                username: userAdded.username,
+                age: userAdded.age,
+            };
+            resolve(returnUser);
+        }).catch((e) => {
+            reject(e);
         });
-    }));
-}
-exports.Login = Login;
-function addUser(username, password, age) {
-    return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-        const id = uuid_1.v4();
-        const user = new User_1.default(id, username, password, age);
-        const userRegistered = yield user.addUser(user);
-        delete userRegistered["Password"];
-        resolve(userRegistered);
     }));
 }
 exports.addUser = addUser;
 function deleteUser(id) {
-    return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-        const userDelete = yield User_1.default.deleteUser(id);
-        User_1.default.deleteUserInConnectionT(id);
-        if (userDelete) {
-            delete userDelete["Password"];
-            resolve(userDelete);
-        }
-        else {
-            reject(`userId ${id} not exist`);
-        }
-    }));
+    return new Promise((resolve, reject) => {
+        User_1.default.findOneAndDelete({ _id: id }, { projection: { password: 0, __v: 0 } }).then((deletedUser) => {
+            resolve(deletedUser);
+        }).catch((e) => {
+            reject(e);
+        });
+    });
 }
 exports.deleteUser = deleteUser;
-function updateUser(id, username, password, age) {
-    return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
-        const userUpdated = yield User_1.default.updateUser(id, username, password, age);
-        if (userUpdated) {
-            delete userUpdated["Password"];
+function updateUser(user) {
+    return new Promise((resolve, reject) => {
+        User_1.default.findOneAndUpdate({ _id: user.id }, { username: user.username, password: user.password, age: user.age }, { new: true, projection: { password: 0, __v: 0 } }).then((userUpdated) => {
             resolve(userUpdated);
-        }
-        else {
-            reject(`userId ${id} not exist`);
-        }
-    }));
+        }).catch((e) => { reject(e); });
+    });
 }
 exports.updateUser = updateUser;
+function Login(username, password) {
+    return new Promise((resolve, reject) => {
+        User_1.default.find({ username: username, password: password }, { password: 0, __v: 0 }).then((userFind) => {
+            if (userFind.length > 0) {
+                resolve(userFind);
+            }
+            else {
+                resolve({ status: "username or password are wrong" });
+            }
+        }).catch((e) => {
+            reject(e);
+        });
+    });
+}
+exports.Login = Login;
 //# sourceMappingURL=userService.js.map

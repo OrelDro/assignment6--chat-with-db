@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose = require("mongoose");
 const Db = require("../db");
 const groupDb = new Db.Db();
 const groupPathDb = '/groups.json';
@@ -63,5 +64,14 @@ class Group {
         return groups[id];
     }
 }
-exports.default = Group;
+const groupSchema = mongoose.Schema({
+    name: String,
+    parentId: { type: mongoose.Schema.Types.ObjectId, default: null },
+    childrens: {
+        kind: String,
+        items: [{ type: mongoose.Schema.Types.ObjectId, refPath: 'childrens.kind' }]
+    }
+});
+exports.default = mongoose.model('Group', groupSchema);
+//export default Group;
 //# sourceMappingURL=Group.js.map

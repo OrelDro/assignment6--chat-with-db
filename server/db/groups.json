@@ -1,1 +1,19 @@
-{"groups":{"9ec4069f-1dcb-4281-b5b5-5c238d95fdce":{"groupName":"RootGroup"},"38fa8a79-c426-43c6-910b-90112ab5c055":{"groupName":"friends"},"3209ae92-48d7-48b9-adbb-d570bc25f995":{"groupName":"alek friends"},"6eab56d3-e10a-4b5d-abd3-69cfb24389ce":{"groupName":"argentina group"},"4ab35d24-53a1-46de-bf39-6a92ea018cfb":{"groupName":"best friends"}}}
+{
+  "groups": {
+    "9ec4069f-1dcb-4281-b5b5-5c238d95fdce": {
+      "groupName": "RootGroup"
+    },
+    "38fa8a79-c426-43c6-910b-90112ab5c055": {
+      "groupName": "friends"
+    },
+    "3209ae92-48d7-48b9-adbb-d570bc25f995": {
+      "groupName": "alek friends"
+    },
+    "6eab56d3-e10a-4b5d-abd3-69cfb24389ce": {
+      "groupName": "argentina group"
+    },
+    "4ab35d24-53a1-46de-bf39-6a92ea018cfb": {
+      "groupName": "best friends"
+    }
+  }
+}

@@ -1,3 +1,5 @@
+import * as mongoose from 'mongoose';
+
 import * as Db from '../db';
 
 const userDb = new Db.Db();
@@ -103,4 +105,14 @@ class User {
     }
 }
 
-export default User;
+const userSchema = mongoose.Schema({
+    username: String,
+    password: String,
+    age: Number
+});
+
+export default mongoose.model('User', userSchema);
+
+
+
+//export default User;

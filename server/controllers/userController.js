@@ -24,7 +24,7 @@ exports.getUserList = getUserList;
 function Login(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const result = yield UserService.Login(req.body.UserName, req.body.Password);
+            const result = yield UserService.Login(req.body.username, req.body.password);
             res.json(result);
         }
         catch (e) {
@@ -36,7 +36,7 @@ exports.Login = Login;
 function addUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const result = yield UserService.addUser(req.body.UserName, req.body.Password, req.body.age);
+            const result = yield UserService.addUser(req.body);
             res.json(result);
         }
         catch (e) {
@@ -60,7 +60,7 @@ exports.deleteUser = deleteUser;
 function updateUser(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const result = yield UserService.updateUser(req.body.id, req.body.UserName, req.body.password, req.body.age);
+            const result = yield UserService.updateUser(req.body);
             res.json(result);
         }
         catch (e) {

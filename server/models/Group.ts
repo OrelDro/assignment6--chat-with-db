@@ -1,3 +1,4 @@
+import * as mongoose from 'mongoose';
 import * as Db from '../db';
 
 const groupDb = new Db.Db();
@@ -71,4 +72,16 @@ class Group {
     }
 }
 
-export default Group;
+const groupSchema = mongoose.Schema({
+    name: String,
+    parentId: {type:mongoose.Schema.Types.ObjectId, default: null},
+    childrens: {
+        kind: String,
+        items: [{type:mongoose.Schema.Types.ObjectId, refPath:'childrens.kind'}]
+    }
+})
+
+
+export default mongoose.model('Group', groupSchema);
+
+//export default Group;
