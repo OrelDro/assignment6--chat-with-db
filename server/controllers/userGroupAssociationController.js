@@ -9,18 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const userGroupAssociationService = require("../services");
-function getTree(req, res) {
-    return __awaiter(this, void 0, void 0, function* () {
-        try {
-            const result = yield userGroupAssociationService.buildTree();
-            res.json(result);
-        }
-        catch (e) {
-            res.status(500).send(`error occur ==> ${e}`);
-        }
-    });
-}
-exports.getTree = getTree;
 function addUserToGroup(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -33,6 +21,18 @@ function addUserToGroup(req, res) {
     });
 }
 exports.addUserToGroup = addUserToGroup;
+function getTree(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const result = yield userGroupAssociationService.buildTree();
+            res.json(result);
+        }
+        catch (e) {
+            res.status(500).send(`error occur ==> ${e}`);
+        }
+    });
+}
+exports.getTree = getTree;
 function deleteGroupChildrens(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {

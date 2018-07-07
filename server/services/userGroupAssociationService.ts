@@ -11,10 +11,10 @@ export function buildTree() {
 }
 
 export function addUserToGroup(userId: string, groupId: string) {
-    return new Promise( (resolve) => {
+    return new Promise( (resolve, reject) => {
         UserGroupAssociation.addUserToGroup(userId,groupId).then( (res) => {
             resolve (res);
-        }).catch( (e) => {throw new Error(e);})
+        }).catch( (e) => {reject(e);})
     })
 }
 

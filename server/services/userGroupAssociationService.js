@@ -13,10 +13,10 @@ function buildTree() {
 }
 exports.buildTree = buildTree;
 function addUserToGroup(userId, groupId) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         UserGroupAssociation_1.default.addUserToGroup(userId, groupId).then((res) => {
             resolve(res);
-        }).catch((e) => { throw new Error(e); });
+        }).catch((e) => { reject(e); });
     });
 }
 exports.addUserToGroup = addUserToGroup;

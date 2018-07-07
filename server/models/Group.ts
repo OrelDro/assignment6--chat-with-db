@@ -75,10 +75,10 @@ class Group {
 const groupSchema = mongoose.Schema({
     name: String,
     parentId: {type:mongoose.Schema.Types.ObjectId, default: null},
-    childrens: {
+    childrens: [{
         kind: String,
-        items: [{type:mongoose.Schema.Types.ObjectId, refPath:'childrens.kind'}]
-    }
+        item: {type:mongoose.Schema.Types.ObjectId, refPath:'childrens.kind'}
+    }]
 })
 
 

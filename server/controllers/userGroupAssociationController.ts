@@ -1,10 +1,9 @@
 import {Request, Response} from 'express';
 import * as userGroupAssociationService from '../services';
 
-
-export async function getTree(req: Request,res: Response) {
+export async function addUserToGroup(req: Request,res: Response) {
     try {
-        const result = await userGroupAssociationService.buildTree();
+        const result = await userGroupAssociationService.addUserToGroup(req.body.userId,req.body.groupId);
         res.json(result);
     }
     catch(e) {
@@ -12,9 +11,9 @@ export async function getTree(req: Request,res: Response) {
     }
 }
 
-export async function addUserToGroup(req: Request,res: Response) {
+export async function getTree(req: Request,res: Response) {
     try {
-        const result = await userGroupAssociationService.addUserToGroup(req.body.userId,req.body.groupId);
+        const result = await userGroupAssociationService.buildTree();
         res.json(result);
     }
     catch(e) {

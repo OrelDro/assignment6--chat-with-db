@@ -1,13 +1,12 @@
 import {getUsersList, Login, addUser, deleteUser, updateUser} from './userService';
-import {getGroupsList, deleteGroup, addGroup} from './groupService';
+import {getGroupsList, deleteGroup, addGroup, addUserToGroup, deleteUserFromGroup, buildTree} from './groupService';
 import {buildConversation, saveMessage} from './conversationService';
 import {getMessages} from './messageService';
-import {buildTree, addUserToGroup, deleteGroupChildrens, deleteUserFromGroup,
-        getUsersInGroup} from './userGroupAssociationService';
+import {deleteGroupChildrens, getUsersInGroup} from './userGroupAssociationService';
 
 
 export {getUsersList, Login, addUser, deleteUser, updateUser};
-export {getGroupsList, deleteGroup, addGroup};
+export {getGroupsList, deleteGroup, addGroup, addUserToGroup, deleteUserFromGroup, buildTree};
 export {buildConversation, saveMessage};
 export {getMessages};
-export {buildTree, addUserToGroup, deleteGroupChildrens, deleteUserFromGroup, getUsersInGroup};
+export {deleteGroupChildrens, getUsersInGroup};

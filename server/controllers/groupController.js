@@ -33,6 +33,18 @@ function deleteGroup(req, res) {
     });
 }
 exports.deleteGroup = deleteGroup;
+function addUserToGroup(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const result = yield GroupService.addUserToGroup(req.body.userId, req.body.groupId);
+            res.json(result);
+        }
+        catch (e) {
+            res.status(500).send(`error occur ==> ${e}`);
+        }
+    });
+}
+exports.addUserToGroup = addUserToGroup;
 function addGroup(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -45,4 +57,28 @@ function addGroup(req, res) {
     });
 }
 exports.addGroup = addGroup;
+function deleteUserFromGroup(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const result = yield GroupService.deleteUserFromGroup(req.body.userId, req.body.groupId);
+            res.json(result);
+        }
+        catch (e) {
+            res.status(500).send(`error occur ==> ${e}`);
+        }
+    });
+}
+exports.deleteUserFromGroup = deleteUserFromGroup;
+function getTree(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const result = yield GroupService.buildTree();
+            res.json(result);
+        }
+        catch (e) {
+            res.status(500).send(`error occur ==> ${e}`);
+        }
+    });
+}
+exports.getTree = getTree;
 //# sourceMappingURL=groupController.js.map

@@ -21,9 +21,39 @@ export async function deleteGroup(req: Request,res: Response) {
     }
 }
 
+export async function addUserToGroup(req: Request,res: Response) {
+    try {
+        const result = await GroupService.addUserToGroup(req.body.userId,req.body.groupId);
+        res.json(result);
+    }
+    catch(e) {
+        res.status(500).send(`error occur ==> ${e}`);
+    }
+}
+
 export async function addGroup(req: Request,res: Response) {
     try {
         const result = await GroupService.addGroup(req.body.parentGroupId, req.body.newGroupName);
+        res.json(result);
+    }
+    catch(e) {
+        res.status(500).send(`error occur ==> ${e}`);
+    }
+}
+
+export async function deleteUserFromGroup(req: Request,res: Response) {
+    try {
+        const result = await GroupService.deleteUserFromGroup(req.body.userId,req.body.groupId);
+        res.json(result);
+    }
+    catch(e) {
+        res.status(500).send(`error occur ==> ${e}`);
+    }
+}
+
+export async function getTree(req: Request,res: Response) {
+    try {
+        const result = await GroupService.buildTree();
         res.json(result);
     }
     catch(e) {
