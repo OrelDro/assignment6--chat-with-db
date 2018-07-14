@@ -8,6 +8,4 @@ const messageRoute_1 = require("./messageRoute");
 exports.MessageRoute = messageRoute_1.default;
 const conversationRoute_1 = require("./conversationRoute");
 exports.ConversationRoute = conversationRoute_1.default;
-const userGroupAssociationRoute_1 = require("./userGroupAssociationRoute");
-exports.userGroupAssociationRoute = userGroupAssociationRoute_1.default;
 //# sourceMappingURL=index.js.map

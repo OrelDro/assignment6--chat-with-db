@@ -21,16 +21,16 @@ class GroupsTable extends React.Component<GroupsTableProps,{}> {
         return {
             onClick: (e:any, handleOriginal:any) => {
                 if(e.target.className === 'fa fa-plus'){
-                    this.props.setIdGroupParent(rowInfo.original.id);
+                    this.props.setIdGroupParent(rowInfo.original._id);
                 }
                 else if(e.target.className === 'fa fa-trash') {
-                    this.props.deleteGroupWithChildrens(rowInfo.original.id);
+                    this.props.deleteGroupWithChildrens(rowInfo.original._id);
                 }
                 else if(e.target.className === 'fa fa-user-times') {
-                    this.props.setGroupIdToGetUsers(rowInfo.original.id);
+                    this.props.setGroupIdToGetUsers(rowInfo.original._id);
                 }
                 else if(e.target.className === 'fa fa-user-plus') {
-                    this.props.setGroupIdToAddUser(rowInfo.original.id);
+                    this.props.setGroupIdToAddUser(rowInfo.original._id);
                 }
                 if (handleOriginal) {
                     handleOriginal();
@@ -45,11 +45,11 @@ class GroupsTable extends React.Component<GroupsTableProps,{}> {
             columns: [
                 {
                     Header: "Group ID",
-                    accessor: "id",
+                    accessor: "_id",
                 },
                 {
                     Header: "Group Name",
-                    accessor: "groupName"
+                    accessor: "name"
                 },
                 {
                     Header:"",
@@ -84,7 +84,8 @@ class GroupsTable extends React.Component<GroupsTableProps,{}> {
         const groupsList = this.props.groups || [];
         return (
             <div>
-                <ReactTable getTdProps={this.onTableClick} data={groupsList} columns={columns} defaultPageSize={10} className="-striped -highlight"/>
+                <ReactTable getTdProps={this.onTableClick} data={groupsList}
+                            columns={columns} defaultPageSize={10} className="-striped -highlight"/>
             </div>
         );
     }

@@ -1,17 +1,17 @@
 import * as React from 'react';
-import './css/App.css';
-import LeftPanel from './containers/LeftPanel';
-import RightPanel from './containers/RightPanel';
-import {stateStoreService} from './StateStore/StateStore'
-import NavBar from './components/NavBar';
-import LoginPanel from './containers/LoginPanel';
-import UsersPanel from './components/UsersPanel';
+import '../css/App.css';
+import LeftPanel from '../components/LeftPanel';
+import RightPanel from '../components/RightPanel';
+import {stateStoreService} from '../StateStore/StateStore'
+import NavBar from '../components/NavBar';
+import LoginPanel from '../containers/LoginPanel';
+import UsersPanel from './UsersPanel';
 import {Route, Switch} from 'react-router-dom';
-import IUser from "./interfaces/IUser";
-import UserEdit from "./components/UserEdit";
+import IUser from "../interfaces/IUser";
+import UserEdit from "./UserEdit";
 import { withRouter, RouteComponentProps } from 'react-router'
-import GroupsPanel from "./components/GroupsPanel";
-import IMessage from "./interfaces/IMessage";
+import GroupsPanel from "./GroupsPanel";
+import IMessage from "../interfaces/IMessage";
 import * as io from 'socket.io-client';
 
 export const socket =io('http://localhost:4000');
@@ -61,7 +61,6 @@ class App extends React.Component<AppProps,IAppState> {
 
     componentDidMount() {
         socket.on('msg', (msg: IMessage) => {
-            debugger;
             this.setState( (prevState) => {
                 return {
                     messages: prevState.messages.concat([msg])
@@ -80,14 +79,14 @@ class App extends React.Component<AppProps,IAppState> {
     }
 
     public setCurrentNode = (cNode: {}) => {
-        socket.emit('leaveFromGroup',this.state.usernameLogin["UserName"],this.state.currentNode["name"]);
+        socket.emit('leaveFromGroup',this.state.usernameLogin["username"],this.state.currentNode["name"]);
         this.setState({currentNode: cNode});
-        if(cNode["type"] && cNode["currentId"] && this.state.usernameLogin["UserName"] && cNode["name"]) {
-            socket.emit('joinToGroup', this.state.usernameLogin["UserName"],cNode["name"]);
-            this.buildConversation(cNode["type"],cNode["currentId"],this.state.usernameLogin["UserName"],cNode["name"]).
-            then( (res:any) => {
-                if(res != "no messages") {
-                    this.setState({messages:res});
+        if(cNode["type"] && cNode["_id"] && this.state.usernameLogin["username"] && cNode["name"]) {
+            socket.emit('joinToGroup', this.state.usernameLogin["username"],cNode["name"]);
+            this.buildConversation(cNode["type"],cNode["_id"],this.state.usernameLogin["username"],cNode["name"]).
+            then( (messages:{}) => {
+                if(messages != null) {
+                    this.setState({messages:messages["messages"]});
                 }
                 else {
                     this.setState({messages:[]});
@@ -97,7 +96,7 @@ class App extends React.Component<AppProps,IAppState> {
     }
 
     public LogOut = () => {
-        socket.emit('logout',this.state.usernameLogin["UserName"]);
+        socket.emit('logout',this.state.usernameLogin["username"]);
         this.setState({usernameLogin:""});
     }
 
@@ -141,10 +140,13 @@ class App extends React.Component<AppProps,IAppState> {
         stateStoreService.deleteUser(id).then((userDeleted: IUser) => {
             const newUsersArr = [...this.state.users];
             const index = this.state.users.findIndex((element) => {
-                return element.id === userDeleted.id;
+                return element._id === userDeleted._id;
             });
             newUsersArr.splice(index, 1);
             this.setState({users: newUsersArr});
+            stateStoreService.getTree().then( (tree: Object[]) => {
+                this.setState({leftPanelTree:tree});
+            });
         })
     }
 
@@ -152,7 +154,7 @@ class App extends React.Component<AppProps,IAppState> {
         stateStoreService.updateUser(user).then((userUpdated: IUser) => {
             const newUsersArr = [...this.state.users];
             const index = this.state.users.findIndex((element) => {
-                return element.id === userUpdated.id;
+                return element._id === userUpdated._id;
             });
             newUsersArr[index] = userUpdated;
             this.setState({users: newUsersArr});
@@ -163,7 +165,7 @@ class App extends React.Component<AppProps,IAppState> {
         })
     }
 
-    public Login = (user: IUser) => {
+    public Login = (user: IUser):Promise<object> => {
         return new Promise( (resolve) => {
             stateStoreService.loginUser(user).then( (userLogin: IUser | Boolean) => {
                 resolve(userLogin);
@@ -173,7 +175,7 @@ class App extends React.Component<AppProps,IAppState> {
 
     public setUserLogin = (userLogin:{}) => {
         this.setState({usernameLogin:userLogin});
-        socket.emit('login', this.state.usernameLogin["UserName"]);
+        socket.emit('login', this.state.usernameLogin["username"]);
     }
 
     public toggleDisplayNavBar = () => {
@@ -202,7 +204,7 @@ class App extends React.Component<AppProps,IAppState> {
 
     public deleteGroupsWithChildrens = (id: string) => {
         stateStoreService.deleteGroupsWithChildrens(id).then( (res) => {
-            if(res == id) {
+            if(res["n"] > 0) {
                 stateStoreService.init();
             }
         })
@@ -210,7 +212,7 @@ class App extends React.Component<AppProps,IAppState> {
 
     public deleteUserFromGroup = (userId:string, groupId:string) => {
         stateStoreService.deleteUserFromGroup(userId, groupId).then( (res) => {
-            if(res == 1) {
+            if(res["n"] > 0) {
                 stateStoreService.init();
             }
         })
@@ -245,8 +247,8 @@ class App extends React.Component<AppProps,IAppState> {
 
     public setMessage = (message:{}) => {
         stateStoreService.saveMessage(message).then( (res:IMessage) => {
-            const messageCon = this.state.messages.concat([res]);
-            this.setState({messages:messageCon});
+            let newMsgArr = this.state.messages;
+            this.setState({messages:newMsgArr.concat([res])});
             socket.emit('sendMessage',this.state.currentNode["name"], res);
         })
     }
@@ -254,7 +256,7 @@ class App extends React.Component<AppProps,IAppState> {
     public render() {
         return (
             <>
-                <NavBar userNameLogin={this.state.usernameLogin["UserName"]}
+                <NavBar userNameLogin={this.state.usernameLogin["username"]}
                         toggleDisplayNavBar={this.toggleDisplayNavBar} LogOut={this.LogOut}/>
                 <Route path='/login' render={this.loginRender}/>
                 <Switch>

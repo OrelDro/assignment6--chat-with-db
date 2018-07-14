@@ -1,6 +1,6 @@
 import * as React from 'react';
-import UsersTable from './UsersTable';
-import Field from "./Field";
+import UsersTable from '../components/UsersTable';
+import Field from "../components/Field";
 import IUser from "../interfaces/IUser";
 import '../css/usersPanel.css';
 
@@ -45,9 +45,10 @@ class UsersPanel extends React.Component<IUsersPanelProps,IUsersPanelState> {
     private addUserClickSubmit = () => {
         const newUser = {
             ...this.state.newUser,
-            "UserName": this.state.newUser.UserName,
-            "Password": this.state.newUser.Password,
-            "age": this.state.newUser.age
+            "username": this.state.newUser.UserName,
+            "password": this.state.newUser.Password,
+            "age": this.state.newUser.age,
+            "type": "User"
         }
         this.props.addNewUser(newUser);
         this.setState({toggleAddUserInputs: false});

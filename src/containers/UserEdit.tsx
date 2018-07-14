@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Field from "./Field";
+import Field from "../components/Field";
 import '../css/userEdit.css';
 import IUser from "../interfaces/IUser";
 import {Link} from 'react-router-dom';
@@ -24,9 +24,10 @@ class UserEdit extends React.Component<IUserEditProps,IUserEditState> {
     private saveChanged = () => {
         const user = {
             ...this.props.location.state.user,
-            "UserName": this.state.userUpdate.UserName,
+            "username": this.state.userUpdate.UserName,
             "password": this.state.userUpdate.Password,
-            "age": this.state.userUpdate.age
+            "age": this.state.userUpdate.age,
+            "type": "User"
         }
         this.props.updateUser(user);
     }

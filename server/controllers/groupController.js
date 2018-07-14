@@ -57,10 +57,22 @@ function addGroup(req, res) {
     });
 }
 exports.addGroup = addGroup;
+function getUsersInGroup(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const result = yield GroupService.getUsersInGroup(req.params.id);
+            res.json(result);
+        }
+        catch (e) {
+            res.status(500).send(`error occur ==> ${e}`);
+        }
+    });
+}
+exports.getUsersInGroup = getUsersInGroup;
 function deleteUserFromGroup(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const result = yield GroupService.deleteUserFromGroup(req.body.userId, req.body.groupId);
+            const result = yield GroupService.deleteUserFromGroup(req.body.id);
             res.json(result);
         }
         catch (e) {

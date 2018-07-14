@@ -55,7 +55,7 @@ class LeftPanel extends React.Component<IleftPanelProps,{}> {
     }
 
     public addIcon(li: any) {
-        if(li.data()['type'] === 'group') {
+        if(li.data()['type'] === 'Group') {
             li.addClass("groupLi");
         }
         else {
@@ -95,7 +95,7 @@ class LeftPanel extends React.Component<IleftPanelProps,{}> {
 
         leftUl.dblclick( (e: React.KeyboardEvent<KeyboardEvent>) => {
             const selector = $(e.target);
-            if(selector.data().type === 'group') {
+            if(selector.data().type === 'Group') {
                 if(selector.children().length > 0) {
                     this.collapseGroup(selector);
                 }
@@ -159,14 +159,14 @@ class LeftPanel extends React.Component<IleftPanelProps,{}> {
                             this.removeBackgroundChildrens(selector);
                             break;
                         case "ArrowRight":
-                            if (selector.data().type === 'group') {
+                            if (selector.data().type === 'Group') {
                                 if (selector.children().length === 0) {
                                     this.expandGroup(selector);
                                 }
                             }
                             break;
                         case "ArrowLeft":
-                            if (selector.data().type === "group") {
+                            if (selector.data().type === "Group") {
                                 if (selector.children().length > 0) {
                                     this.collapseGroup(selector);
                                 }
@@ -212,7 +212,7 @@ class LeftPanel extends React.Component<IleftPanelProps,{}> {
     }
 
     public removeBackgroundChildrens(Curselector: any) {
-        if(Curselector.data().type === 'group' && Curselector.children().length > 0) {
+        if(Curselector.data().type === 'Group' && Curselector.children().length > 0) {
             Curselector.children().addClass("removeBackground");
         }
     }

@@ -11,7 +11,6 @@ export enum ERROR_MSG{
 }
 
 interface ILoginPanelState {
-    loggedInUser: IUser | null,
     errorMsg: ERROR_MSG,
     counter: number
 }
@@ -20,7 +19,7 @@ interface ILoginPanelProps {
     showLoginPanel: boolean,
     history:any,
     toggleDisplayNavBar: () => void,
-    userLogin: (user:IUser) => any,
+    userLogin: (user:IUser) => Promise<object>,
     setUserLogin: any
 }
 
@@ -29,13 +28,12 @@ class LoginPanel extends React.Component<ILoginPanelProps, ILoginPanelState> {
     constructor(props:ILoginPanelProps) {
         super(props);
         this.state = {
-            loggedInUser: null,
             errorMsg: ERROR_MSG.none,
             counter: 0
         }
     }
 
-    auth = (user: IUser): any => {
+    auth = (user: IUser): Promise<object> => {
         return new Promise( async (resolve) => {
             const res = await this.props.userLogin(user);
             resolve(res);
@@ -44,11 +42,10 @@ class LoginPanel extends React.Component<ILoginPanelProps, ILoginPanelState> {
 
      onLoginSubmitHandler = (user:IUser)=>{
         this.auth(user).then( (res: any) => {
-            if(res){
-                this.props.setUserLogin(res);
+            if(res.length > 0){
+                this.props.setUserLogin(res[0]);
                 this.props.toggleDisplayNavBar();
                 this.setState({
-                    loggedInUser: user,
                     errorMsg: ERROR_MSG.allGood
                 }, ()=>{
                     this.props.history.push('/chat');
@@ -57,13 +54,11 @@ class LoginPanel extends React.Component<ILoginPanelProps, ILoginPanelState> {
             else{
                 if(this.state.counter===2){
                     this.setState({
-                        loggedInUser: null,
                         errorMsg: ERROR_MSG.locked
                     });
                 }
                 else {
                     this.setState((prev) => ({
-                        loggedInUser: null,
                         errorMsg: ERROR_MSG.credentials,
                         counter: prev.counter + 1
                     }));

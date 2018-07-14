@@ -1,7 +1,6 @@
 import * as React from 'react';
 import '../css/message.css';
 
-
 interface IMessageProps {
     userLogin: {}
     messageContent: string,
@@ -15,7 +14,7 @@ class Message extends React.Component<IMessageProps,{}> {
     }
     public render() {
         return (
-            <div className={this.props.messageSender === this.props.userLogin["UserName"]?'bubble':'bubble bubble--alt'}>
+            <div className={this.props.messageSender === this.props.userLogin["username"]?'bubble':'bubble bubble--alt'}>
                 <span className='messageSender'>{this.props.messageSender}</span>
                 <span>{this.props.messageContent}</span>
                 <span><time>{this.props.messageTime}</time></span>

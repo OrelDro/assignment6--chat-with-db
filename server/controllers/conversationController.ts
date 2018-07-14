@@ -4,7 +4,7 @@ import * as conversationService from '../services';
 
 export async function getConversation(req: Request,res: Response) {
     try {
-        const result = await conversationService.buildConversation(req.body.type, req.body.id, req.body.sender, req.body.receiver);
+        const result = await conversationService.getConversation(req.body);
         res.json(result);
     }
     catch(e) {

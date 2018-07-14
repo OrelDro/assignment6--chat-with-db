@@ -1,5 +1,5 @@
 import * as React from 'react';
-import InputBlock from '../components/InputBlock';
+import InputBlock from '../containers/InputBlock';
 import MsgPanel from './MsgPanel';
 import '../css/rightPanel.css';
 import IMessage from "../interfaces/IMessage";

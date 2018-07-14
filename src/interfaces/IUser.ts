@@ -1,9 +1,9 @@
 interface IUser {
-    id?: string,
+    _id?: string,
     UserName: string,
     Password?: string,
     age?: number,
-    messages?: object[]
+    type?: string
 }
 
 export default IUser;

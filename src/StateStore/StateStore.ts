@@ -111,10 +111,7 @@ class StateStoreService {
     public loginUser(user:IUser) {
         return new Promise( (resolve) => {
             apiCalls.post('users/login', user).then((res) => {
-                if (res) {
-                    resolve(res);
-                }
-                resolve(false);
+                resolve(res);
             })
         })
     }
@@ -129,7 +126,7 @@ class StateStoreService {
 
     public getTree() {
         return new Promise( (resolve) => {
-            apiCalls.get('tree/getTree').then((tree: any) => {
+            apiCalls.get('groups/getTree').then((tree: any) => {
                 resolve(tree);
             })
         })
@@ -137,7 +134,7 @@ class StateStoreService {
 
     public deleteGroupsWithChildrens(id: string) {
         return new Promise( (resolve) => {
-            apiCalls.delete('tree/delete',id).then( (res) => {
+            apiCalls.delete('groups/deleteGroup',id).then( (res) => {
                 resolve(res);
             })
         })
@@ -146,7 +143,7 @@ class StateStoreService {
 
     public deleteUserFromGroup(userId: string, groupId:string) {
         return new Promise( (resolve) => {
-            apiCalls.delete('tree/deleteUserFromGroup',{userId,groupId}).then( (res) => {
+            apiCalls.delete('groups/deleteUserFromGroup',{userId,groupId}).then( (res) => {
                 resolve(res);
             })
         })
@@ -154,7 +151,7 @@ class StateStoreService {
 
     public getUsersFromGroup(groupId: string) {
         return new Promise( (resolve) => {
-            apiCalls.get(`tree/getUsersInGroup/${groupId}`).then( (res) => {
+            apiCalls.get(`groups/getUsersInGroup/${groupId}`).then( (res) => {
                 resolve(res);
             })
         })
@@ -162,7 +159,7 @@ class StateStoreService {
 
     public addUserToGroup(userId:string,groupId:string) {
         return new Promise( (resolve) => {
-            apiCalls.put('tree/addUserToGroup',{userId,groupId}).then( (res) => {
+            apiCalls.put('groups/addUserToGroup',{userId,groupId}).then( (res) => {
                 resolve(res);
             })
         })

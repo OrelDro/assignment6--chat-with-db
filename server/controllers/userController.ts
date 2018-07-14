@@ -13,7 +13,7 @@ export async function getUserList(req: Request,res: Response) {
 
 export async function Login(req: Request, res: Response) {
     try {
-        const result = await UserService.Login(req.body.username, req.body.password);
+        const result = await UserService.Login(req.body.UserName, req.body.Password);
         res.json(result);
     }
     catch(e) {

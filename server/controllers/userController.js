@@ -24,7 +24,7 @@ exports.getUserList = getUserList;
 function Login(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const result = yield UserService.Login(req.body.username, req.body.password);
+            const result = yield UserService.Login(req.body.UserName, req.body.Password);
             res.json(result);
         }
         catch (e) {

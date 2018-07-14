@@ -1,6 +1,6 @@
 import * as React from 'react';
-import GroupsTable from './GroupsTable';
-import Field from "./Field";
+import GroupsTable from '../components/GroupsTable';
+import Field from "../components/Field";
 import "../css/groupsPanel.css";
 
 interface IGroupsPanelProps {
@@ -74,12 +74,12 @@ class GroupsPanel extends React.Component<IGroupsPanelProps,IGroupsPanelState> {
     public setGroupIdToGetUsers = (parentGroupId: string) => {
         this.props.getUsersFromGroup(parentGroupId).then( (usersList:any) => {
             this.setState({showDeleteUserFromGroupInputs: true,
-                usersListFgroup:usersList,
+                usersListFgroup:usersList[0].items,
                 showAddGroupInputs: false,
                 showAddUserToGroup:false,
             });
-            if(usersList.length > 0) {
-                this.setState({userId:usersList[0].id,
+            if(usersList[0].items.length > 0) {
+                this.setState({userId:usersList[0].items[0]._id,
                     "groupId": parentGroupId});
             }
         });
@@ -97,7 +97,7 @@ class GroupsPanel extends React.Component<IGroupsPanelProps,IGroupsPanelState> {
     public deleteUserFromGroupRender = () => {
         let usersList;
         usersList = this.state.usersListFgroup.map( (element) => {
-                return (<option key={element["id"]} value={element["id"]}>{element["UserName"]}</option>)
+                return (<option key={element["_id"]} value={element["_id"]}>{element["username"]}</option>)
             }
         )
         if(usersList.length > 0) {
@@ -121,13 +121,12 @@ class GroupsPanel extends React.Component<IGroupsPanelProps,IGroupsPanelState> {
             showDeleteUserFromGroupInputs:false
         });
         if(this.props.usersList.length > 0) {
-            this.setState({groupId:groupId,userId:this.props.usersList[0].id});
+            this.setState({groupId:groupId,userId:this.props.usersList[0]._id});
         }
     }
 
     public addUserToGroupHandler = () => {
-        this.props.addUserToGroup(this.state.userId,this.state.groupId).then( (res:any) => {
-            console.log(res);
+        this.props.addUserToGroup(this.state.userId,this.state.groupId).then( () => {
             this.setState({showAddUserToGroup:false})
         })
     }
@@ -144,7 +143,7 @@ class GroupsPanel extends React.Component<IGroupsPanelProps,IGroupsPanelState> {
         let usersListValues;
         const users = this.props.usersList;
         usersListValues = users.map( (element:any,idx:number) => {
-            return <option key={idx} value={element.id}>{element.UserName}</option>
+            return <option key={idx} value={element._id}>{element.username}</option>
         })
         return (
             <div className="addUserToGroup">

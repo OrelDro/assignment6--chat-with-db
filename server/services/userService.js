@@ -1,14 +1,7 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const User_1 = require("../models/User");
+const Group_1 = require("../models/Group");
 function getUsersList() {
     return new Promise((resolve, reject) => {
         User_1.default.find(null, { password: 0, __v: 0 }).then((usersList) => {
@@ -20,25 +13,24 @@ function getUsersList() {
 }
 exports.getUsersList = getUsersList;
 function addUser(newUser) {
-    return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+    return new Promise((resolve, reject) => {
         const user = new User_1.default(newUser);
-        user.save().then((userAdded) => {
-            const returnUser = {
-                _id: userAdded._id,
-                username: userAdded.username,
-                age: userAdded.age,
-            };
+        user.save().then((returnUser) => {
             resolve(returnUser);
         }).catch((e) => {
             reject(e);
         });
-    }));
+    });
 }
 exports.addUser = addUser;
 function deleteUser(id) {
     return new Promise((resolve, reject) => {
         User_1.default.findOneAndDelete({ _id: id }, { projection: { password: 0, __v: 0 } }).then((deletedUser) => {
-            resolve(deletedUser);
+            Group_1.default.update({ items: deletedUser._id }, { $pullAll: { items: [deletedUser._id] } }).then((res) => {
+                if (res) {
+                    resolve(deletedUser);
+                }
+            });
         }).catch((e) => {
             reject(e);
         });
@@ -47,7 +39,7 @@ function deleteUser(id) {
 exports.deleteUser = deleteUser;
 function updateUser(user) {
     return new Promise((resolve, reject) => {
-        User_1.default.findOneAndUpdate({ _id: user.id }, { username: user.username, password: user.password, age: user.age }, { new: true, projection: { password: 0, __v: 0 } }).then((userUpdated) => {
+        User_1.default.findOneAndUpdate({ _id: user._id }, { username: user.username, password: user.password, age: user.age, type: "User" }, { new: true, projection: { password: 0, __v: 0 } }).then((userUpdated) => {
             resolve(userUpdated);
         }).catch((e) => { reject(e); });
     });

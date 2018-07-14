@@ -1,4 +1,5 @@
 import User from '../models/User';
+import Group from '../models/Group';
 
 export function getUsersList() {
     return new Promise( (resolve,reject) => {
@@ -11,14 +12,9 @@ export function getUsersList() {
 }
 
 export function addUser(newUser) {
-    return new Promise( async (resolve, reject) => {
+    return new Promise( (resolve, reject) => {
         const user = new User(newUser);
-        user.save().then( (userAdded) => {
-            const returnUser = {
-                _id: userAdded._id,
-                username: userAdded.username,
-                age: userAdded.age,
-            };
+        user.save().then((returnUser) => {
             resolve(returnUser);
         }).catch( (e) => {
             reject(e);
@@ -28,8 +24,12 @@ export function addUser(newUser) {
 
 export function deleteUser(id: string) {
     return new Promise((resolve, reject) => {
-        User.findOneAndDelete({_id:id},{projection:{password:0,__v:0}}).then( (deletedUser) => {
-            resolve(deletedUser);
+        User.findOneAndDelete({_id:id},{projection:{password:0,__v:0}}).then((deletedUser) => {
+            Group.update({items:deletedUser._id},{$pullAll:{items:[deletedUser._id]}}).then((res) => {
+                if(res) {
+                    resolve(deletedUser);
+                }
+            })
         }).catch( (e) => {
             reject(e);
         })
@@ -38,8 +38,8 @@ export function deleteUser(id: string) {
 
 export function updateUser(user) {
     return new Promise( (resolve, reject) => {
-        User.findOneAndUpdate({_id:user.id},
-            {username:user.username,password:user.password,age:user.age},
+        User.findOneAndUpdate({_id:user._id},
+            {username:user.username,password:user.password,age:user.age,type:"User"},
             {new:true,projection:{password:0,__v:0}}).then( (userUpdated) => {
                 resolve(userUpdated);
         }).catch( (e) => {reject(e)});
@@ -48,7 +48,7 @@ export function updateUser(user) {
 
 export function Login(username:string, password: string) {
     return new Promise( (resolve, reject) => {
-        User.find({username:username,password:password},{password:0,__v:0}).then( (userFind) => {
+        User.find({username:username,password:password},{password:0,__v:0}).then((userFind) => {
             if(userFind.length > 0) {
                 resolve(userFind);
             }

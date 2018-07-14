@@ -12,7 +12,7 @@ const conversationService = require("../services");
 function getConversation(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const result = yield conversationService.buildConversation(req.body.type, req.body.id, req.body.sender, req.body.receiver);
+            const result = yield conversationService.getConversation(req.body);
             res.json(result);
         }
         catch (e) {

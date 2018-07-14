@@ -9,9 +9,7 @@ interface UsersTableProps {
     deleteUser: any
 }
 
-interface UsersTableState {}
-
-class UsersTable extends React.Component<UsersTableProps,UsersTableState> {
+class UsersTable extends React.Component<UsersTableProps,{}> {
     constructor(props:UsersTableProps) {
         super(props);
     }
@@ -20,7 +18,7 @@ class UsersTable extends React.Component<UsersTableProps,UsersTableState> {
         return {
             onClick: (e:any, handleOriginal:any) => {
                 if(e.target.className === 'fa fa-trash'){
-                    this.props.deleteUser(rowInfo.original.id);
+                    this.props.deleteUser(rowInfo.original._id);
                 }
                 if (handleOriginal) {
                     handleOriginal();
@@ -35,11 +33,11 @@ class UsersTable extends React.Component<UsersTableProps,UsersTableState> {
             columns: [
                 {
                     Header: "User ID",
-                    accessor: "id",
+                    accessor: "_id",
                 },
                 {
                     Header: "User Name",
-                    accessor: "UserName"
+                    accessor: "username"
                 },
                 {
                     Header: "Age",
@@ -56,7 +54,7 @@ class UsersTable extends React.Component<UsersTableProps,UsersTableState> {
                     Header:"",
                     accessor:"",
                     Cell: (props:any) => {
-                        return <Link to={{pathname:`/users/${props.original.id}/edit`, state:{user:props.original}}}><i className="fa fa-edit" /></Link>
+                        return <Link to={{pathname:`/users/${props.original._id}/edit`, state:{user:props.original}}}><i className="fa fa-edit" /></Link>
                     }
                 }
             ]

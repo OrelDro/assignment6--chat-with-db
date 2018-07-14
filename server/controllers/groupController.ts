@@ -41,9 +41,19 @@ export async function addGroup(req: Request,res: Response) {
     }
 }
 
+export async function getUsersInGroup(req: Request,res: Response) {
+    try {
+        const result = await GroupService.getUsersInGroup(req.params.id);
+        res.json(result);
+    }
+    catch(e) {
+        res.status(500).send(`error occur ==> ${e}`);
+    }
+}
+
 export async function deleteUserFromGroup(req: Request,res: Response) {
     try {
-        const result = await GroupService.deleteUserFromGroup(req.body.userId,req.body.groupId);
+        const result = await GroupService.deleteUserFromGroup(req.body.id);
         res.json(result);
     }
     catch(e) {

@@ -29,12 +29,11 @@ class InputBlock extends React.Component<IInputBlockProps, IInputBlockState> {
     public saveMessage = () => {
         let promise = new Promise((resolve) => {
             this.setState({ newMessage: this.state.MessageOnChange, MessageOnChange: ""} );
-
             resolve(true);
         })
         promise.then( () => {
             if(this.state.newMessage.trim() !== "") {
-                let sender = this.props.userNameLogin["UserName"];
+                let sender = this.props.userNameLogin["username"];
                 let currentNode = this.props.currentNode;
                 if(currentNode !== null) {
                     let currentTime = this.getTime();
@@ -43,7 +42,7 @@ class InputBlock extends React.Component<IInputBlockProps, IInputBlockState> {
                         "content": this.state.newMessage,
                         "sender": sender,
                         "receiverName": currentNode["name"],
-                        "receiverId": currentNode["currentId"],
+                        "receiverId": currentNode["_id"],
                         "type":currentNode["type"]
                     }
                     this.props.setMessage(message);

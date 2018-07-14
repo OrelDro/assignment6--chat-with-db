@@ -9,6 +9,5 @@ app.use('/users', routes.UserRoute);
 app.use('/groups', routes.GroupRoute);
 app.use('/messages', routes.MessageRoute);
 app.use('/conversation', routes.ConversationRoute);
-app.use('/tree', routes.userGroupAssociationRoute);
 exports.default = app;
 //# sourceMappingURL=app.js.map
